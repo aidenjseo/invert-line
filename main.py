@@ -1,6 +1,34 @@
-import re
+
+def tokenize(line):
+    tokens = []
+    word = ""
+    in_parens = False
+
+    for ch in line:
+        if ch == "(":
+            if word:
+                tokens.append(word)
+                word = ""
+            in_parens = True
+            word += ch
+        elif ch == ")":
+            word += ch
+            tokens.append(word)
+            word = ""
+            in_parens = False
+        elif ch.isspace() and not in_parens:
+            if word:
+                tokens.append(word)
+                word = ""
+        else:
+            word += ch
+
+    if word:
+        tokens.append(word)
+    return tokens
+
 def invert_line(line):
-    tokens = re.findall(r"\([^()]*\)|\S+", line)
+    tokens = tokenize(line)
     tokens.reverse()
 
     if tokens and tokens[0] and tokens[0][-1] in ".!?":
