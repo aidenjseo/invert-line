@@ -1,5 +1,3 @@
-
-
 import re
 def invert_line(line):
     #split into tokens, but keep (...) as one token
